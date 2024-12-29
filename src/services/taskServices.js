@@ -17,6 +17,19 @@ const getTasks = async () => {
     }
 }
 
+const getFiltredTasks = async (title) => {
+    try{
+        const filter = {};
+        if (title) {
+            filter.title = { $regex: title, $options: 'i' };
+        }
+        const tasks = await Task.find(filter);
+        return tasks;
+    }catch(e){
+        console.error("Error :", e);
+    }
+}
+
 const updateTask = async (taskId,updateData) => {
     try{
         return await Task.findByIdAndUpdate(taskId,updateData,{new:true});
@@ -33,4 +46,4 @@ const deleteTask = async (taskId) => {
     }
 }
 
-module.exports = {CreateTask,getTasks,updateTask,deleteTask}
+module.exports = {CreateTask,getTasks,getFiltredTasks,updateTask,deleteTask}
