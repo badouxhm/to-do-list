@@ -2,10 +2,15 @@ const Task = require('../models/taskModel')
 
 const CreateTask = async (taskData) => {
     try{
-        const newTask = new Task(taskData)
+        const {title, completed, userId} = taskData;
+        if (!title || !completed || !userId){
+            throw new Error("All information are required!");
+        }
+        const newTask = new Task({title, completed, userId});
         return await newTask.save();
     }catch(e){
         console.error("Error :", e);
+        throw e;
     }
 }
 
@@ -14,6 +19,7 @@ const getTasks = async () => {
         return await Task.find();
     }catch(e){
         console.error("Error :", e);
+        throw e;
     }
 }
 
@@ -27,6 +33,7 @@ const getFiltredTasks = async (title) => {
         return tasks;
     }catch(e){
         console.error("Error :", e);
+        throw e;
     }
 }
 
@@ -35,6 +42,7 @@ const updateTask = async (taskId,updateData) => {
         return await Task.findByIdAndUpdate(taskId,updateData,{new:true});
     }catch(e){
         console.error("Error :", e);
+        throw e;
     }
 }
 
@@ -43,6 +51,7 @@ const deleteTask = async (taskId) => {
         return await Task.findByIdAndDelete(taskId);
     }catch(e){
         console.error("Error :", e);
+        throw e;
     }
 }
 
