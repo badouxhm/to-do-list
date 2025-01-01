@@ -6,7 +6,7 @@ const register = async (req, res) => {
         const result = await authService.registerUser(req.body);
         res.status(result.status).json(result.message);
     } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: 'Internal server error' }); 
     }
 };
 
